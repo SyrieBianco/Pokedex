@@ -1,5 +1,8 @@
-import connect from "./pokemon_index_container";
+
+import { Route } from 'react-router-dom';
 import React from 'react';
+import PokemonIndexItem from './pokemon_index_item';
+import PokemonDetailContainer from './pokemon_detail_container';
 
 
 export default class PokemonIndex extends React.Component {
@@ -9,16 +12,27 @@ export default class PokemonIndex extends React.Component {
 
   render(){
     const { pokemon } = this.props;
-    const pokeListItem = pokemon.map(poke => (
-      <li key={poke.id}>
-        { poke.name }
-        <img src={ poke.image_url } height="50" width="50"/>
-      </li>
+
+    const pokeListItems = pokemon.map(poke => (
+      <PokemonIndexItem
+        key={poke.id}
+        pokemon={poke}
+        />
     ));
+
+
     return(
-      <ul>
-        { pokeListItem }
-      </ul>
+      <section className="index_page">
+
+        <div className="index_view">
+            <ul>
+              { pokeListItems }
+            </ul>
+        </div>
+
+        <Route path="/pokemon/:pokemonId" component={PokemonDetailContainer}/>
+        
+      </section>
     );
   }
 }
